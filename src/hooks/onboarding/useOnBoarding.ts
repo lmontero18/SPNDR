@@ -1,40 +1,25 @@
 "use client";
 
+import { onboardingSteps } from "@/data/onboarding/onboardingSteps";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useUserStore } from "@/stores/userStore";
 
 export const useOnboarding = () => {
-  const router = useRouter();
-  const { setUserData } = useUserStore();
+  const totalSteps = onboardingSteps.length;
 
-  const totalSteps = 4;
-  const fields = ["income", "expenses", "debts", "savings"] as const;
-  const labels = [
-    "What's your monthly income?",
-    "What are your fixed expenses?",
-    "How much do you pay in debts?",
-    "What's your savings goal?",
-  ];
-
+  const [formData, setFormData] = useState(
+    Object.fromEntries(onboardingSteps.map((step) => [step.id, ""]))
+  );
   const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState({
-    income: "",
-    expenses: "",
-    debts: "",
-    savings: "",
-  });
+
+  const currentStepData = onboardingSteps[currentStep];
+  const currentField = currentStepData.id;
+
+  const handleChange = (value: string) => {
+    setFormData((prev) => ({ ...prev, [currentField]: value }));
+  };
 
   const handleNext = () => {
-    if (currentStep === totalSteps - 1) {
-      setUserData({
-        income: Number(formData.income),
-        expenses: Number(formData.expenses),
-        debts: Number(formData.debts),
-        savings: Number(formData.savings),
-      });
-      router.push("/dashboard");
-    } else {
+    if (currentStep < totalSteps - 1) {
       setCurrentStep((prev) => prev + 1);
     }
   };
@@ -45,17 +30,13 @@ export const useOnboarding = () => {
     }
   };
 
-  const handleChange = (value: string) => {
-    const field = fields[currentStep];
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
   return {
     currentStep,
     totalSteps,
-    labels,
-    field: fields[currentStep],
-    value: formData[fields[currentStep]],
+    currentStepData,
+    currentField,
+    formData,
+    value: formData[currentField],
     handleChange,
     handleNext,
     handleBack,

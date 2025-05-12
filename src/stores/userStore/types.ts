@@ -3,6 +3,9 @@ export interface UserData {
   expenses: number;
   debts: number;
   savings: number;
+  currency: string;
+  financialPriority: string;
+  budgetingExperience: string;
 }
 
 export interface UserStore {

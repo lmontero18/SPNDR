@@ -1,0 +1,56 @@
+export const onboardingSteps = [
+  {
+    id: "monthly_income",
+    label: "What's your average monthly income?",
+    placeholder: "₡600,000",
+    type: "number",
+    required: true,
+    aiContext: "Helps estimate user's budget range and savings potential.",
+  },
+  {
+    id: "fixed_expenses",
+    label:
+      "How much do you spend monthly on fixed expenses (e.g. rent, subscriptions)?",
+    placeholder: "₡200,000",
+    type: "number",
+    required: true,
+    aiContext: "Used to calculate disposable income and baseline obligations.",
+  },
+  {
+    id: "debt_payments",
+    label: "Do you currently make debt payments each month?",
+    placeholder: "₡75,000",
+    type: "number",
+    required: false,
+    aiContext: "Allows AI to prioritize debt reduction strategies if needed.",
+  },
+  {
+    id: "savings_goal",
+    label: "How much would you like to save each month?",
+    placeholder: "₡50,000",
+    type: "number",
+    required: false,
+    aiContext: "Guides AI to build a personalized savings strategy.",
+  },
+  {
+    id: "financial_priority",
+    label: "What is your top financial priority right now?",
+    type: "select",
+    options: [
+      "Paying off debt",
+      "Saving more",
+      "Investing",
+      "Spending smarter",
+    ],
+    required: true,
+    aiContext: "Sets the tone for the assistant's recommendations.",
+  },
+  {
+    id: "budgeting_experience",
+    label: "How familiar are you with budgeting?",
+    type: "select",
+    options: ["Beginner", "Intermediate", "Advanced"],
+    required: false,
+    aiContext: "Adjusts the tone and complexity of AI explanations.",
+  },
+];
